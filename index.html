@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1115">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Promille">
+  <title>Promille</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <!-- Jetzt -->
+    <section id="view-now" class="view">
+      <header class="hero">
+        <div class="bac"><span id="bac-value">0,00</span><span class="unit">‰</span><span id="bac-trend" class="trend"></span></div>
+        <div id="bac-sub" class="sub">Noch nichts getrunken</div>
+        <div class="forecast">
+          <div class="card"><div class="label">Unter 0,5 ‰</div><div id="fc-05" class="value">–</div></div>
+          <div class="card"><div class="label">Nüchtern</div><div id="fc-sober" class="value">–</div></div>
+        </div>
+        <svg id="chart" class="chart" viewBox="0 0 340 110" preserveAspectRatio="none" aria-label="Promilleverlauf"></svg>
+      </header>
+
+      <div id="drink-grid" class="grid"></div>
+
+      <div class="grid events">
+        <button id="btn-food" class="btn event"><span class="icon">🍽️</span><span class="name">Gegessen</span><span id="food-hint" class="size">Aufnahme langsamer</span></button>
+        <button id="btn-vomit" class="btn event"><span class="icon">🤮</span><span class="name">Papst</span><span class="size">Magen geleert</span></button>
+      </div>
+
+      <h2 class="section-title">Heute Abend <span id="session-total" class="muted"></span></h2>
+      <ul id="session-list" class="entries"></ul>
+    </section>
+
+    <!-- Verlauf -->
+    <section id="view-history" class="view" hidden>
+      <h1>Verlauf</h1>
+      <div class="stats" id="stats"></div>
+      <h2 class="section-title">Letzte 6 Monate</h2>
+      <div class="heatmap-wrap"><svg id="heatmap" class="heatmap"></svg></div>
+      <div class="legend"><span>weniger</span><i class="l0"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span>mehr</span></div>
+      <div id="day-detail" class="day-detail" hidden></div>
+      <h2 class="section-title">Log</h2>
+      <ul id="log" class="days"></ul>
+    </section>
+
+    <!-- Profil -->
+    <section id="view-profile" class="view" hidden>
+      <h1>Profil</h1>
+      <p class="muted">Wird nur auf diesem Gerät gespeichert.</p>
+      <form id="profile-form" class="form">
+        <label>Geschlecht
+          <div class="segmented">
+            <input type="radio" name="sex" id="sex-m" value="m" checked><label for="sex-m">Mann</label>
+            <input type="radio" name="sex" id="sex-f" value="f"><label for="sex-f">Frau</label>
+          </div>
+        </label>
+        <label>Gewicht (kg)<input type="number" name="weight" inputmode="decimal" min="30" max="250" required></label>
+        <label>Größe (cm) <span class="muted">optional, genauer</span><input type="number" name="height" inputmode="numeric" min="120" max="230"></label>
+        <label>Alter <span class="muted">optional, genauer</span><input type="number" name="age" inputmode="numeric" min="16" max="110"></label>
+        <button class="btn primary" type="submit">Speichern</button>
+      </form>
+
+      <h2 class="section-title">Daten</h2>
+      <div class="row">
+        <button id="btn-export" class="btn small">Exportieren</button>
+        <label class="btn small">Importieren<input id="file-import" type="file" accept="application/json" hidden></label>
+      </div>
+      <button id="btn-wipe" class="btn small danger">Alle Daten löschen</button>
+
+      <p class="disclaimer">Alle Werte sind grobe Schätzungen nach der Widmark-Formel (Abweichung ±30 % und mehr). Nicht geeignet, um zu entscheiden, ob du fahren darfst. Wer getrunken hat, fährt nicht.</p>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <button data-view="now" class="active"><span>🍺</span>Jetzt</button>
+    <button data-view="history"><span>📅</span>Verlauf</button>
+    <button data-view="profile"><span>👤</span>Profil</button>
+  </nav>
+
+  <div id="toast" class="toast" hidden><span id="toast-text"></span><button id="toast-undo">Rückgängig</button></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
