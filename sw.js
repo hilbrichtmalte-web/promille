@@ -1,5 +1,5 @@
 // Offline-Cache. Bei Änderungen an der App VERSION erhöhen.
-const VERSION = 'promille-v1';
+const VERSION = 'promille-v2';
 const FILES = ['./', 'index.html', 'style.css', 'app.js', 'engine.js', 'manifest.webmanifest',
   'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 

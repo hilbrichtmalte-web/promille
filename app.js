@@ -359,7 +359,7 @@ function switchView(v) {
   for (const b of document.querySelectorAll('.tabbar button')) b.classList.toggle('active', b.dataset.view === v);
   if (v === 'profile') renderProfile();
   render();
-  window.scrollTo(0, 0);
+  document.querySelector('main').scrollTop = 0;
 }
 for (const b of document.querySelectorAll('.tabbar button')) b.onclick = () => switchView(b.dataset.view);
 

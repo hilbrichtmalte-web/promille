@@ -41,15 +41,26 @@
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-html, body { margin: 0; background: var(--bg); color: var(--text); }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); }
 
+/* App-Shell: nur <main> scrollt, die Tabbar ist ein fester Flex-Teil unten.
+   So springt sie nicht, wenn eine Seite kürzer als der Bildschirm ist (iOS-PWA). */
 body {
   font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  padding: env(safe-area-inset-top) 0 calc(76px + env(safe-area-inset-bottom));
-  overscroll-behavior-y: none;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top);
 }
 
-main { max-width: 560px; margin: 0 auto; padding: 16px; }
+main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  padding: 16px max(16px, calc((100% - 528px) / 2)) 24px;
+}
 
 h1 { font-size: 28px; margin: 8px 0 4px; }
 .section-title { font-size: 15px; font-weight: 600; margin: 28px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
@@ -153,7 +164,7 @@ h1 { font-size: 28px; margin: 8px 0 4px; }
 
 /* Tabbar & Toast */
 .tabbar {
-  position: fixed; bottom: 0; left: 0; right: 0; display: flex; justify-content: center;
+  flex-shrink: 0; display: flex; justify-content: center;
   background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(12px);
   border-top: 1px solid var(--border); padding-bottom: env(safe-area-inset-bottom);
 }
