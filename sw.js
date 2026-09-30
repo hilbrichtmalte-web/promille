@@ -1,5 +1,5 @@
 // Offline-Cache. Bei Änderungen an der App VERSION erhöhen.
-const VERSION = 'promille-v2';
+const VERSION = 'promille-v3';
 const FILES = ['./', 'index.html', 'style.css', 'app.js', 'engine.js', 'manifest.webmanifest',
   'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
@@ -14,10 +14,11 @@ self.addEventListener('activate', e => {
 });
 
 // Netz zuerst (damit Updates ankommen), Cache als Fallback offline.
+// no-cache umgeht den 10-Minuten-HTTP-Cache von GitHub Pages.
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
+  if (e.request.method !== 'GET' || new URL(e.request.url).origin !== location.origin) return;
   e.respondWith(
-    fetch(e.request)
+    fetch(e.request.url, { cache: 'no-cache' })
       .then(res => {
         const copy = res.clone();
         caches.open(VERSION).then(c => c.put(e.request, copy));
